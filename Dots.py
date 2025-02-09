@@ -10,8 +10,9 @@ class Dots:
         self.pos = np.zeros(2)
         self.vel = np.zeros(2)
         self.acc = np.zeros(2)
-        self.pos[0] = width//2
-        self.pos[1] = 75
+        self.pos[0] = 400
+        self.pos[1] = 150
+        
         self.sprite = pg.shapes.Circle(self.pos[0], self.pos[1], 2, color=(255,255,255))
         self.brain = brain.Brain(400)
 
@@ -24,7 +25,7 @@ class Dots:
     
 
     def calcFitness(self):
-        distanceToGoal = math.sqrt((self.goal[0]-self.sprite.x)**2 + (self.goal[1]-self.sprite.y)**2)
+        distanceToGoal = math.sqrt((self.goal[0]-self.pos[0])**2 + (self.goal[1]-self.pos[1])**2)
         self.fitness = 1/(distanceToGoal**2)
 
     def move(self):
@@ -37,19 +38,29 @@ class Dots:
             for i in range(0, len(self.vel)):
                 self.vel[i] = self.vel[i]/(mag/5)
         self.pos += self.vel
+        self.sprite.x = self.pos[0]
+        self.sprite.y = self.pos[1]
 
     def update(self):
-        if (self.sprite.x < 2 or self.sprite.y < 2 or self.sprite.x > self.width-2 or self.sprite.y > self.height-2):
+        if (self.pos[0] < 2 or self.pos[1] < 2 or self.pos[0] > self.width-2 or self.pos[1] > self.height-2):
             self.dead = True
-        elif math.sqrt((self.goal[0]-self.sprite.x)**2 + (self.goal[1]-self.sprite.y)**2) < 5:
+        elif math.sqrt((self.goal[0]-self.pos[0])**2 + (self.goal[1]-self.pos[1])**2) < 5:
             self.readchGoal = True
         if self.dead != True and self.readchGoal != True:
             self.move()
-        self.sprite.position = self.pos
+        
         self.sprite.draw()
+
     
 
     def breed(self):
-        baby = Dots(self.width, self.height, self.goal)
-        baby.brain = self.brain.clone()
-        return baby
+        babyBrain = self.brain.clone()
+        return babyBrain
+
+    def reset(self):
+        self.readchGoal = False
+        self.dead = False
+        self.pos[0] = 400
+        self.pos[1] = 150
+        self.sprite.x = self.pos[0]
+        self.sprite.y = self.pos[1]

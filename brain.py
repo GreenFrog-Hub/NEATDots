@@ -1,5 +1,5 @@
 import numpy as np
-from random import random
+from random import random, uniform
 import math
 
 class Brain:
@@ -11,13 +11,12 @@ class Brain:
         self.randomize()
     
     def randomize(self):
-        for i in range(0, self.size-1):
-            randAng= random()*2*math.pi
+        for i in range(0, self.size):
+            randAng= uniform(0,2*math.pi)
             self.direction = np.zeros(2)
             self.direction.put(0,math.cos(randAng))
             self.direction.put(1, math.sin(randAng))
             self.directions.append(self.direction)
-        self.directions = np.asarray(self.directions)
     
 
     def clone(self):
@@ -26,12 +25,12 @@ class Brain:
         return clone
 
     def mutate(self):
-        mutationRate = 0.25
-        for i in range(0,len(self.directions)-1):
-            rand = random()
+        mutationRate = 0.01
+        for i in range(1,len(self.directions)):
+            rand = uniform(0,1.1)
             if rand < mutationRate:
-                randAng= random()*2*math.pi
+                randAng= uniform(0,2*math.pi)
                 self.direction = np.zeros(2)
                 self.direction.put(0,math.cos(randAng))
                 self.direction.put(1, math.sin(randAng))
-                self.directions.put(i, self.direction)
+                self.directions[i] = self.direction

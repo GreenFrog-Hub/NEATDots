@@ -11,13 +11,14 @@ goal.put(0,400)
 goal.put(1,750)
 
 
-peopleOfLemanburg = Population(500, window.width, window.height, goal)
+peopleOfLemanburg = Population(250, window.width, window.height, goal)
 
 genLabel = pg.text.Label(text="Generation: 0", x=340, y= 400, color=(255,255,255,255))
 
 goalSprite = pg.shapes.Circle(x=goal[0], y=goal[1], radius=4, color=(255,0,0))
 
-def Draw(dt):
+@window.event
+def draw(dt):
     window.clear()
     goalSprite.draw()
     if peopleOfLemanburg.allDead() == True:
@@ -28,5 +29,6 @@ def Draw(dt):
     else:
         peopleOfLemanburg.updateDots()
     genLabel.draw()
-pg.clock.schedule_interval(Draw, 1/60)
+
+pg.clock.schedule_interval(draw, 1/60)
 pg.app.run()
