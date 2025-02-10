@@ -2,6 +2,7 @@ import pyglet as pg
 import numpy as np
 import brain
 import math
+from random import uniform
 
 class Dots:
     def __init__(self, width, height, goal):
@@ -25,18 +26,18 @@ class Dots:
     
 
     def calcFitness(self):
-        distanceToGoal = math.sqrt((self.goal[0]-self.pos[0])**2 + (self.goal[1]-self.pos[1])**2)
-        self.fitness = 1/(distanceToGoal**2)
+        self.distanceToGoal = math.sqrt((self.goal[0]-self.pos[0])**2 + (self.goal[1]-self.pos[1])**2)
+        self.fitness = 1/(self.distanceToGoal**2)
 
     def move(self):
         if len(self.brain.directions) >self.brain.step:
-            self.acc = self.brain.directions[self.brain.step]
+            self.acc = self.direction = np.asarray(self.brain.directions[self.brain.step])
             self.brain.step += 1
         self.vel += self.acc
-        mag = np.linalg.norm(self.vel)
-        if mag > 5:
+        self.mag = np.linalg.norm(self.vel)
+        if self.mag > 5:
             for i in range(0, len(self.vel)):
-                self.vel[i] = self.vel[i]/(mag/5)
+                self.vel[i] = self.vel[i]/(self.mag/5)
         self.pos += self.vel
         self.sprite.x = self.pos[0]
         self.sprite.y = self.pos[1]
@@ -54,13 +55,16 @@ class Dots:
     
 
     def breed(self):
-        babyBrain = self.brain.clone()
-        return babyBrain
+        self.babyBrain = brain.Brain(len(self.brain.directions))
+        self.babyBrain.directions = self.brain.directions.copy()
+        return self.babyBrain
 
     def reset(self):
-        self.readchGoal = False
-        self.dead = False
         self.pos[0] = 400
         self.pos[1] = 150
         self.sprite.x = self.pos[0]
         self.sprite.y = self.pos[1]
+        self.brain.step = 0
+        self.readchGoal = False
+        self.dead = False
+    

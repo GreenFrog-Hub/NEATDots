@@ -11,7 +11,7 @@ goal.put(0,400)
 goal.put(1,750)
 
 
-peopleOfLemanburg = Population(250, window.width, window.height, goal)
+peopleOfLemanburg = Population(100, window.width, window.height, goal)
 
 genLabel = pg.text.Label(text="Generation: 0", x=340, y= 400, color=(255,255,255,255))
 
@@ -30,5 +30,5 @@ def draw(dt):
         peopleOfLemanburg.updateDots()
     genLabel.draw()
 
-pg.clock.schedule_interval(draw, 1/60)
+pg.clock.schedule_interval(draw, 1/120)
 pg.app.run()

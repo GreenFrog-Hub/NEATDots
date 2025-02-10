@@ -13,12 +13,12 @@ class Population:
             self.dotArray.append(Dots(width, height, goal))
         
     def updateDots(self):
-        for i in range(0, self.size):
+        for i in range(0, len(self.dotArray)):
             self.dotArray[i].update()
     
 
     def allDead(self):
-        for i in range(0, self.size):
+        for i in range(0, len(self.dotArray)):
             if self.dotArray[i].dead == False and self.dotArray[i].readchGoal == False:
                 return False
         return True
@@ -31,34 +31,36 @@ class Population:
 
     def naturalSelection(self):
         self.calcFitnessSum()
-        newBrainArray = []
+        self.newBrainArray = []
         for i in range(0, len(self.dotArray)):
             
             #select parent
-            parent = self.selectParent()
+            self.parent = self.selectParent()
 
             #make baby
-            newBrainArray.append(parent.breed())
+            self.newBrainArray.append(self.parent.breed())
+
+        self.dotArray = []
+        for i in range(0, self.size):
+            self.dotArray.append(Dots(self.width, self.height, self.goal))
+            self.dotArray[i].brain = self.newBrainArray[i]
             
-        for i in range(0, len(self.dotArray)):
-            self.dotArray[i].brain = newBrainArray[i]
-            self.dotArray[i].reset()
         self.gen += 1
 
     
 
     def calcFitnessSum(self):
         self.totalFitness = 0
-        for i in range(0, self.size-1):
-            self.totalFitness += self.dotArray[i].fitness
+        for i in range(0, len(self.dotArray)):
+            self.totalFitness += self.dotArray[i].fitness * 100
     
 
     def selectParent(self):
         randomChoice = uniform(0, self.totalFitness)
 
         runningSum = 0
-        for i in range(0, self.size):
-            runningSum += self.dotArray[i].fitness
+        for i in range(0, len(self.dotArray)):
+            runningSum += self.dotArray[i].fitness*100
             if runningSum > randomChoice:
                 return self.dotArray[i]
     

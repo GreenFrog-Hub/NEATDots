@@ -12,25 +12,25 @@ class Brain:
     
     def randomize(self):
         for i in range(0, self.size):
-            randAng= uniform(0,2*math.pi)
-            self.direction = np.zeros(2)
-            self.direction.put(0,math.cos(randAng))
-            self.direction.put(1, math.sin(randAng))
-            self.directions.append(self.direction)
+            self.randAng= uniform(0,2*math.pi)
+            self.direction = []
+            self.direction.append(math.cos(self.randAng))
+            self.direction.append(math.sin(self.randAng))
+            self.directions.append(self.direction.copy())
     
 
     def clone(self):
-        clone = Brain(len(self.directions))
-        clone.directions = self.directions
-        return clone
+        self.clone = Brain(len(self.directions))
+        self.clone.directions = self.directions
+        return self.clone
 
     def mutate(self):
-        mutationRate = 0.01
-        for i in range(1,len(self.directions)):
-            rand = uniform(0,1.1)
-            if rand < mutationRate:
-                randAng= uniform(0,2*math.pi)
-                self.direction = np.zeros(2)
-                self.direction.put(0,math.cos(randAng))
-                self.direction.put(1, math.sin(randAng))
-                self.directions[i] = self.direction
+        self.mutationRate = 0.01
+        for i in range(0,len(self.directions)):
+            self.rand = uniform(0,1)
+            if self.rand < self.mutationRate:
+                self.randAng= uniform(0,2*math.pi)
+                self.direction = []
+                self.direction.append(math.cos(self.randAng))
+                self.direction.append(math.sin(self.randAng))   
+                self.directions[i] = self.direction.copy()
