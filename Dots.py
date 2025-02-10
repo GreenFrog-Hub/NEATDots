@@ -28,6 +28,8 @@ class Dots:
     def calcFitness(self):
         self.distanceToGoal = math.sqrt((self.goal[0]-self.pos[0])**2 + (self.goal[1]-self.pos[1])**2)
         self.fitness = 1/(self.distanceToGoal**2)
+        if self.readchGoal == True:
+            self.fitness += 1/self.brain.step**2
 
     def move(self):
         if len(self.brain.directions) >self.brain.step:

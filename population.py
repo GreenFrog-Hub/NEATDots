@@ -66,7 +66,7 @@ class Population:
     
 
     def mutateDemBabies(self):
-        for i in range(0, len(self.dotArray)):
+        for i in range(1, len(self.dotArray)):
             self.dotArray[i].brain.mutate()
     
     
