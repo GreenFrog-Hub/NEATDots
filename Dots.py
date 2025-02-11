@@ -11,13 +11,14 @@ class Dots:
         self.pos = np.copy(startPos)
         self.vel = np.zeros(2)
         self.acc = np.zeros(2)
-        self.maxSteps = 400
+        self.maxSteps = maxSteps
         
         self.sprite = pg.shapes.Circle(self.pos[0], self.pos[1], 2, color=(255,255,255))
         self.brain = brain.Brain(self.maxSteps)
 
         self.reachedGoal = False
         self.dead = False
+        self.hitWall = False
 
         self.goal = goal
 
@@ -27,10 +28,12 @@ class Dots:
     
 
     def calcFitness(self):
-        self.distanceToGoal = math.sqrt((self.goal[0]-self.pos[0])**2 + (self.goal[1]-self.pos[1])**2)
-        self.fitness = 1/(self.distanceToGoal**2)
         if self.reachedGoal == True:
-            self.fitness += (1000/self.brain.step**16)
+            self.fitness = 1+(10000/self.brain.step**2)
+        else:
+            self.distanceToGoal = math.sqrt((self.goal[0]-self.pos[0])**2 + (self.goal[1]-self.pos[1])**2)
+            self.fitness = 1/(self.distanceToGoal)
+        
 
     def move(self):
         if len(self.brain.directions) >self.brain.step:
@@ -57,6 +60,7 @@ class Dots:
         for i in self.walls:
             if i.checkCollision(self.pos[0], self.pos[1]):
                 self.dead = True
+                self.hitWall = True
                 break
         if self.dead != True and self.reachedGoal != True:
             self.move()

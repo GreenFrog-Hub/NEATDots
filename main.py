@@ -25,7 +25,8 @@ def on_mouse_press(x, y, button, modifiers):
     global start
     global peopleOfLemanburg
     global genLabel
-    global stepsLabel
+    global minStepsLabel
+    global maxStepsLabel
     press += 1
     if press == 1:
         global startSprite
@@ -33,7 +34,7 @@ def on_mouse_press(x, y, button, modifiers):
         startPos.put(1, y)
         startSprite.x = x
         startSprite.y = y
-        textLabel.text = "Click to choose end locatoin"
+        textLabel.text = "Click to choose end location"
     elif press == 2:
         global goalSprite
         goal.put(0, x)
@@ -52,17 +53,11 @@ def on_mouse_press(x, y, button, modifiers):
         textLabel.delete() 
         start = True
     if start == True:
-        peopleOfLemanburg = Population(250, window.width, window.height,startPos, goal, 100, walls)
+        peopleOfLemanburg = Population(400, window.width, window.height,startPos, goal, 400,100, walls)
         genLabel = pg.text.Label(text="Generation: 0", x=0, y= window.height-20, color=(255,255,255,255), anchor_x="left",)
-        stepsLabel = pg.text.Label(text="Min Steps: "+str(peopleOfLemanburg.minStep), x=0, y=window.height- 40, color=(255,255,255,255), anchor_x="left")
+        minStepsLabel = pg.text.Label(text="Min Steps: "+str(peopleOfLemanburg.minStep), x=0, y=window.height- 40, color=(255,255,255,255), anchor_x="left")
+        maxStepsLabel = pg.text.Label(text="Max Steps: "+str(peopleOfLemanburg.maxSteps), x=0, y=window.height- 60, color=(255,255,255,255), anchor_x="left")
         
-
-
-
-
-
-
-
 
 
 @window.event
@@ -78,11 +73,13 @@ def draw(dt):
             peopleOfLemanburg.naturalSelection()
             peopleOfLemanburg.mutateDemBabies()
             genLabel.text = "Generation: "+str(round(peopleOfLemanburg.gen))
-            stepsLabel.text = "Min Steps: "+str(round(peopleOfLemanburg.minStep))
+            minStepsLabel.text = "Min Steps: "+str(round(peopleOfLemanburg.minStep))
+            maxStepsLabel.text = "Max Steps: "+str(round(peopleOfLemanburg.maxSteps))
         else:
             peopleOfLemanburg.updateDots()
         genLabel.draw()
-        stepsLabel.draw()
+        minStepsLabel.draw()
+        maxStepsLabel.draw()
     else:
         textLabel.draw()
 

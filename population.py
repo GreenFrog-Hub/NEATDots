@@ -3,7 +3,7 @@ from random import random, uniform
 import numpy as np
 
 class Population:
-    def  __init__(self, size, width, height, startPos,goal, change, walls):
+    def  __init__(self, size, width, height, startPos,goal, max,change, walls):
         self.size = size
         self.width = width
         self.height = height
@@ -11,10 +11,11 @@ class Population:
         self.startPos = np.copy(startPos)
         self.dotArray = []
         self.gen = 0
-        self.maxSteps = 0 + change
+        self.maxSteps = max
         self.change = change
         self.minStep=10000
         self.walls = walls
+        self.timesNoDotMadeIt = 0
         for i in range(0, self.size):
             self.dotArray.append(Dots(width, height, self.startPos, goal, self.maxSteps, self.walls))
         
@@ -36,6 +37,8 @@ class Population:
     def clacFitness(self):
         for i in range(0, len(self.dotArray)):
             self.dotArray[i].calcFitness()
+            if self.gen > 50 and self.dotArray[i].hitWall:
+                self.dotArray[i].fitness = self.dotArray[i].fitness/5
     
 
     def naturalSelection(self):
@@ -57,6 +60,15 @@ class Population:
 
         self.getBestDot()
         self.newBrainArray.append(self.bestDot.breed())
+        
+        if self.numberOfDotsMakingit() > 3:
+            self.timesNoDotMadeIt = 0
+        else:
+            if self.gen > 50:
+                if self.numberOfDotsMakingit() == 0:
+                    self.timesNoDotMadeIt += 1
+                if self.timesNoDotMadeIt > 5:
+                    self.maxSteps += 5
         self.dotArray = []
         for i in range(0, self.size):
             self.dotArray.append(Dots(self.width, self.height, self.startPos, self.goal, self.maxSteps, self.walls))
@@ -92,6 +104,7 @@ class Population:
         max = 0
         maxIndex = 0
         for i in range(0, len(self.dotArray)):
+            currentDot = self.dotArray[i]
             if self.dotArray[i].fitness > max:
                 max = self.dotArray[i].fitness
                 maxIndex = i
@@ -100,5 +113,14 @@ class Population:
 
         if self.bestDot.reachedGoal == True:
             self.minStep = self.bestDot.brain.step
+        
+    
+    def numberOfDotsMakingit(self):
+        numberMadeIt = 0
+        for i in range(0, len(self.dotArray)):
+            if self.dotArray[i].reachedGoal:
+                numberMadeIt += 1
+        return numberMadeIt
+                
     
     
