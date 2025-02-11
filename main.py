@@ -52,11 +52,11 @@ def on_mouse_press(x, y, button, modifiers):
         walls.append(Wall(x,y))
         textLabel.delete() 
         start = True
-    if start == True:
         peopleOfLemanburg = Population(400, window.width, window.height,startPos, goal, 400,100, walls)
         genLabel = pg.text.Label(text="Generation: 0", x=0, y= window.height-20, color=(255,255,255,255), anchor_x="left",)
         minStepsLabel = pg.text.Label(text="Min Steps: "+str(peopleOfLemanburg.minStep), x=0, y=window.height- 40, color=(255,255,255,255), anchor_x="left")
         maxStepsLabel = pg.text.Label(text="Max Steps: "+str(peopleOfLemanburg.maxSteps), x=0, y=window.height- 60, color=(255,255,255,255), anchor_x="left")
+
         
 
 
