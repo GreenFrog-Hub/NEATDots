@@ -61,7 +61,7 @@ class Population:
         self.getBestDot()
         self.newBrainArray.append(self.bestDot.breed())
         
-        if self.numberOfDotsMakingit() > 3:
+        if self.numberOfDotsMakingit() > 0:
             self.timesNoDotMadeIt = 0
         else:
             if self.gen > 50:

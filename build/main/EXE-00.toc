@@ -64,11 +64,11 @@
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\python311.dll',
    'BINARY'),
-  ('numpy.libs\\libscipy_openblas64_-43e11ff0749b8cbe0a615c9cf6737e0e.dll',
-   'C:\\git\\NEATDots\\myenv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-43e11ff0749b8cbe0a615c9cf6737e0e.dll',
-   'BINARY'),
   ('numpy.libs\\msvcp140-d64049c6e3865410a7dda6a7e9f0c575.dll',
    'C:\\git\\NEATDots\\myenv\\Lib\\site-packages\\numpy.libs\\msvcp140-d64049c6e3865410a7dda6a7e9f0c575.dll',
+   'BINARY'),
+  ('numpy.libs\\libscipy_openblas64_-43e11ff0749b8cbe0a615c9cf6737e0e.dll',
+   'C:\\git\\NEATDots\\myenv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-43e11ff0749b8cbe0a615c9cf6737e0e.dll',
    'BINARY'),
   ('select.pyd',
    'C:\\Program '
@@ -191,7 +191,7 @@
  [],
  False,
  False,
- 1739287973,
+ 1739292069,
  [('runw.exe',
    'C:\\git\\NEATDots\\myenv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
    'EXECUTABLE')],

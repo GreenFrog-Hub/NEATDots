@@ -638,13 +638,13 @@
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\tracemalloc.py',
    'PYMODULE'),
-  ('_py_abc',
-   'C:\\Program '
-   'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\_py_abc.py',
-   'PYMODULE'),
   ('stringprep',
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\stringprep.py',
+   'PYMODULE'),
+  ('_py_abc',
+   'C:\\Program '
+   'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\_py_abc.py',
    'PYMODULE'),
   ('obsticals', 'C:\\git\\NEATDots\\obsticals.py', 'PYMODULE'),
   ('numpy',
@@ -2011,11 +2011,11 @@
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\python311.dll',
    'BINARY'),
-  ('numpy.libs\\libscipy_openblas64_-43e11ff0749b8cbe0a615c9cf6737e0e.dll',
-   'C:\\git\\NEATDots\\myenv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-43e11ff0749b8cbe0a615c9cf6737e0e.dll',
-   'BINARY'),
   ('numpy.libs\\msvcp140-d64049c6e3865410a7dda6a7e9f0c575.dll',
    'C:\\git\\NEATDots\\myenv\\Lib\\site-packages\\numpy.libs\\msvcp140-d64049c6e3865410a7dda6a7e9f0c575.dll',
+   'BINARY'),
+  ('numpy.libs\\libscipy_openblas64_-43e11ff0749b8cbe0a615c9cf6737e0e.dll',
+   'C:\\git\\NEATDots\\myenv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-43e11ff0749b8cbe0a615c9cf6737e0e.dll',
    'BINARY'),
   ('select.pyd',
    'C:\\Program '
