@@ -20,13 +20,13 @@ class Brain:
     
 
     def clone(self):
-        self.clone = Brain(len(self.directions))
+        self.clone = Brain(self.size)
         self.clone.directions = self.directions
         return self.clone
 
-    def mutate(self):
-        self.mutationRate = 0.01
-        for i in range(0,len(self.directions)):
+    def mutate(self, change):
+        self.mutationRate = 0.03
+        for i in range(0,self.size):
             self.rand = uniform(0,1)
             if self.rand < self.mutationRate:
                 self.randAng= uniform(0,2*math.pi)

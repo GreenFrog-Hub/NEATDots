@@ -1,25 +1,34 @@
 from Dots import Dots
 from random import random, uniform
+import numpy as np
 
 class Population:
-    def  __init__(self, size, width, height, goal):
+    def  __init__(self, size, width, height, startPos,goal, change, walls):
         self.size = size
         self.width = width
         self.height = height
         self.goal = goal
+        self.startPos = np.copy(startPos)
         self.dotArray = []
         self.gen = 0
+        self.maxSteps = 0 + change
+        self.change = change
+        self.minStep=10000
+        self.walls = walls
         for i in range(0, self.size):
-            self.dotArray.append(Dots(width, height, goal))
+            self.dotArray.append(Dots(width, height, self.startPos, goal, self.maxSteps, self.walls))
         
     def updateDots(self):
         for i in range(0, len(self.dotArray)):
-            self.dotArray[i].update()
+            if self.dotArray[i].brain.step > self.minStep:
+                self.dotArray[i].dead = True
+            else:
+                self.dotArray[i].update()
     
 
     def allDead(self):
         for i in range(0, len(self.dotArray)):
-            if self.dotArray[i].dead == False and self.dotArray[i].readchGoal == False:
+            if self.dotArray[i].dead == False and self.dotArray[i].reachedGoal == False:
                 return False
         return True
 
@@ -32,7 +41,13 @@ class Population:
     def naturalSelection(self):
         self.calcFitnessSum()
         self.newBrainArray = []
-        for i in range(0, len(self.dotArray)):
+
+        self.gen += 1
+
+        # if self.gen %20 == 0:
+        #     self.maxSteps += self.change
+        
+        for i in range(0, len(self.dotArray)-1):
             
             #select parent
             self.parent = self.selectParent()
@@ -40,12 +55,15 @@ class Population:
             #make baby
             self.newBrainArray.append(self.parent.breed())
 
+        self.getBestDot()
+        self.newBrainArray.append(self.bestDot.breed())
         self.dotArray = []
         for i in range(0, self.size):
-            self.dotArray.append(Dots(self.width, self.height, self.goal))
+            self.dotArray.append(Dots(self.width, self.height, self.startPos, self.goal, self.maxSteps, self.walls))
             self.dotArray[i].brain = self.newBrainArray[i]
+        self.dotArray[self.size-1].setBestDot()
             
-        self.gen += 1
+        
 
     
 
@@ -66,7 +84,21 @@ class Population:
     
 
     def mutateDemBabies(self):
-        for i in range(1, len(self.dotArray)):
-            self.dotArray[i].brain.mutate()
+        for i in range(0, len(self.dotArray)-1):
+            self.dotArray[i].brain.mutate(self.change)
+    
+
+    def getBestDot(self):
+        max = 0
+        maxIndex = 0
+        for i in range(0, len(self.dotArray)):
+            if self.dotArray[i].fitness > max:
+                max = self.dotArray[i].fitness
+                maxIndex = i
+        
+        self.bestDot = self.dotArray[maxIndex]
+
+        if self.bestDot.reachedGoal == True:
+            self.minStep = self.bestDot.brain.step
     
     
